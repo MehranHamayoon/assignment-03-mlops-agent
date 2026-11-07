@@ -35,6 +35,15 @@ def test_mlflow_missing_metric_does_not_invent_candidate(settings):
     assert result["best_run"] is None
 
 
+def test_metric_capitalization_resolves_only_to_a_unique_recorded_key(settings):
+    client = Mock()
+    client.search_runs.return_value = [run("a" * 32, 0.8), run("b" * 32, 0.95)]
+    result = MlflowTools(settings, client).compare(metric="F1", experiment_ids=["1"])
+    assert result["metric"] == "f1"
+    assert result["requested_metric"] == "F1"
+    assert result["best_run"]["run_id"] == "b" * 32
+
+
 def test_airflow_uses_v2_authentication_and_required_logical_date(settings):
     seen = []
 

@@ -157,6 +157,25 @@ def test_missing_recorded_lineage_is_an_unknown_not_an_invented_git_reference(se
     assert any("unknown" in u for u in result.uncertainties)
 
 
+def test_explicit_user_run_count_overrides_a_wrong_llm_scope(settings):
+    registry = Registry()
+    registry.execute = Mock(
+        return_value=Evidence(
+            tool="mlflow_compare",
+            status="ok",
+            data={"best_run": None},
+            request_id="r",
+            duration_ms=1,
+        )
+    )
+    Orchestrator(
+        settings, registry, Planner("mlflow_compare", {"limit": 1, "days": 5, "metric": "F1"})
+    ).chat("Compare the last five training runs by F1 score")
+    args = registry.execute.call_args.args[1]
+    assert args["limit"] == 5
+    assert "days" not in args
+
+
 def test_agent_api_requires_authentication_and_validates_payload(settings, monkeypatch):
     from agent import main
 

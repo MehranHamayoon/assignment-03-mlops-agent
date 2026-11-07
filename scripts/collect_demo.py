@@ -73,20 +73,30 @@ def main():
     if best.status != "ok" or not best.data.get("best_run"):
         raise RuntimeError("Seed real MLflow runs before collecting conversations")
     run_id = best.data["best_run"]["run_id"]
-    conversation(
+    provenance_result = conversation(
         engine,
         f"Which dataset version was used for MLflow run {run_id}? "
         "Use trace_dataset to retrieve the run and verify its recorded DVC metadata and hash.",
         directory / "01-dataset-provenance.json",
         {"mlflow_run", "dvc_version"},
     )
-    conversation(
+    versions = [e.data for e in provenance_result.evidence if e.tool == "dvc_version"]
+    if not versions or versions[0].get("recorded_hash_matches") is not True:
+        raise RuntimeError("Live provenance did not verify the recorded dataset hash")
+    comparison_result = conversation(
         engine,
         "Compare the last five training runs and recommend the best candidate "
         "based on F1 score using mlflow_compare. Explain its production readiness limits.",
         directory / "02-model-selection.json",
         {"mlflow_compare"},
     )
+    compared = next(e.data for e in comparison_result.evidence if e.tool == "mlflow_compare")
+    if compared.get("best_run") is None or len(compared.get("runs", [])) != 5:
+        raise RuntimeError(
+            "Live comparison must rank five real runs and select a candidate"
+        )
+    if compared.get("metric") != "f1":
+        raise RuntimeError("Live comparison did not use the recorded f1 metric")
     trigger = engine.chat(
         "Trigger the approved iris_training training pipeline with default "
         "configuration using airflow_trigger. Propose the action for review."

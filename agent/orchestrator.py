@@ -1,4 +1,5 @@
 import json
+import re
 import uuid
 from datetime import UTC, datetime
 
@@ -18,6 +19,7 @@ For best model + data + deployment + retraining, select ONLY assess_model.
 For a specific run's dataset provenance, select trace_dataset with that run_id. Python will
 retrieve the run and read its recorded DVC reference; do not guess a Git hash yourself.
 For comparing recent runs or selecting best F1, select ONLY mlflow_compare.
+For "last five training runs", use limit=5 and metric="f1". Leave days=30 unless requested.
 For prediction API diagnosis select ONLY k8s_health; Python also retrieves unhealthy pod logs.
 For an explicit training request select airflow_trigger; for run status select airflow_runs.
 Never trigger training merely to answer a best-model or retraining assessment.
@@ -307,6 +309,37 @@ class Orchestrator:
                 args = call["function"].get("arguments", {})
                 if not isinstance(args, dict):
                     raise ValueError("Tool arguments must be an object")
+                if name in ("mlflow_compare", "mlflow_runs"):
+                    # Enforce explicit user counts when the LLM supplies a different count.
+                    count = re.search(
+                        r"\b(?:last|latest|recent)\s+(\d+|one|two|three|four|five|six|seven|eight|"
+                        r"nine|ten)\s+(?:training\s+)?runs\b",
+                        message,
+                        re.I,
+                    )
+                    if count:
+                        words = {
+                            w: i
+                            for i, w in enumerate(
+                                (
+                                    "one",
+                                    "two",
+                                    "three",
+                                    "four",
+                                    "five",
+                                    "six",
+                                    "seven",
+                                    "eight",
+                                    "nine",
+                                    "ten",
+                                ),
+                                1,
+                            )
+                        }
+                        value = count.group(1).lower()
+                        args = {**args, "limit": int(value) if value.isdigit() else words[value]}
+                        if not re.search(r"\b(days?|weeks?|months?|years?)\b", message, re.I):
+                            args.pop("days", None)
                 key = json.dumps([name, args], sort_keys=True)
                 if key in seen:
                     continue

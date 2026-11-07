@@ -12,12 +12,23 @@ from agent.schemas import EmptyArgs, StrictModel
 
 class RunsArgs(StrictModel):
     experiment_ids: list[str] = Field(default_factory=list, max_length=10)
-    limit: int = Field(default=5, ge=1, le=100)
-    days: int = Field(default=30, ge=1, le=3650)
+    limit: int = Field(
+        default=5, ge=1, le=100, description="Count of recent runs. 'Last five runs' means limit=5."
+    )
+    days: int = Field(
+        default=30,
+        ge=1,
+        le=3650,
+        description="Lookback days, not run count. Default 30 unless specified.",
+    )
 
 
 class CompareArgs(RunsArgs):
-    metric: str = Field(default="f1", pattern=r"^[A-Za-z][A-Za-z0-9_]{0,63}$")
+    metric: str = Field(
+        default="f1",
+        pattern=r"^[A-Za-z][A-Za-z0-9_]{0,63}$",
+        description="Recorded metric key. F1 score is the lowercase key f1.",
+    )
     direction: Literal["maximize", "minimize"] = "maximize"
 
 
@@ -95,6 +106,12 @@ class MlflowTools:
 
     def compare(self, metric="f1", direction="maximize", **kwargs) -> dict:
         result = self.runs(**kwargs)
+        requested_metric = metric
+        available = {key for run in result["runs"] for key in run["metrics"]}
+        if metric not in available:
+            matches = [key for key in available if key.casefold() == metric.casefold()]
+            if len(matches) == 1:
+                metric = matches[0]
         eligible = [
             r for r in result["runs"] if r["status"] == "FINISHED" and metric in r["metrics"]
         ]
@@ -102,6 +119,7 @@ class MlflowTools:
         result.update(
             {
                 "metric": metric,
+                "requested_metric": requested_metric,
                 "direction": direction,
                 "best_run": eligible[0] if eligible else None,
                 "ranking": [r["run_id"] for r in eligible],
