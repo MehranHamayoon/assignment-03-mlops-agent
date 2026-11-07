@@ -1,0 +1,5 @@
+train:
+  c: 1.0
+  max_iter: 300
+  quality_threshold: 0.85
+

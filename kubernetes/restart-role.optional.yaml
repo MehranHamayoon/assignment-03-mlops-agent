@@ -1,0 +1,26 @@
+# OPTIONAL: install only for confirmed restart demonstrations. Reader role is the default.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: mlops-agent-restart
+  namespace: mlops
+rules:
+  - apiGroups: [apps]
+    resources: [deployments]
+    resourceNames: [iris-api]
+    verbs: [patch]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: mlops-agent-restart
+  namespace: mlops
+subjects:
+  - kind: ServiceAccount
+    name: mlops-agent
+    namespace: mlops
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: mlops-agent-restart
+

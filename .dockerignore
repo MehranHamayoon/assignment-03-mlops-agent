@@ -1,0 +1,14 @@
+.git
+.venv
+.tools
+.env*
+tmp
+runtime
+evidence
+output
+screenshots
+__pycache__
+*.pdf
+dvc-remote
+.dvc/cache
+

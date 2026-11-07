@@ -1,0 +1,14 @@
+[
+  {
+    "version": 1,
+    "md5": "4a3beb7462eb695a87c685647c3245c2",
+    "rows": 120,
+    "result": "Restored from DVC remote in a fresh Git clone"
+  },
+  {
+    "version": 2,
+    "md5": "4224576f0267bf88902f87f0f6200967",
+    "rows": 150,
+    "result": "Restored from DVC remote in a fresh Git clone"
+  }
+]

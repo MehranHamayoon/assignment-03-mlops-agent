@@ -1,0 +1,55 @@
+name: assignment-03-mlops
+services:
+  postgres:
+    image: postgres:16.11
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_DB: airflow
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Run python -m scripts.configure first}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U airflow"]
+      interval: 5s
+      retries: 20
+    volumes: ["postgres-data:/var/lib/postgresql/data"]
+  mlflow:
+    build: .
+    user: "0:0"
+    command: ["mlflow", "server", "--host", "0.0.0.0", "--port", "5000", "--backend-store-uri", "sqlite:////mlflow/mlflow.db", "--artifacts-destination", "/mlflow/artifacts", "--serve-artifacts", "--allowed-hosts", "localhost:*,127.0.0.1:*,mlflow:*"]
+    ports: ["127.0.0.1:5000:5000"]
+    volumes: ["mlflow-data:/mlflow"]
+  airflow:
+    build:
+      context: .
+      dockerfile: Dockerfile.airflow
+    environment:
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__CORE__DAGS_FOLDER: /opt/project/dags
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:${POSTGRES_PASSWORD}@postgres/airflow
+      AIRFLOW__CORE__SIMPLE_AUTH_MANAGER_USERS: "agent:user"
+      AIRFLOW__CORE__SIMPLE_AUTH_MANAGER_PASSWORDS_FILE: /opt/airflow/passwords.json
+      AIRFLOW__API__BASE_URL: http://localhost:8080
+      AIRFLOW__SCHEDULER__ENABLE_HEALTH_CHECK: "true"
+      AIRFLOW_PASSWORD: ${AIRFLOW_PASSWORD:?Run python -m scripts.configure first}
+      MLFLOW_TRACKING_URI: http://mlflow:5000
+      MLFLOW_EXPERIMENT: iris-classifier
+      PYTHONPATH: /opt/project
+    ports: ["127.0.0.1:8080:8080"]
+    volumes:
+      - .:/opt/project
+      - airflow-data:/opt/airflow
+    depends_on:
+      mlflow:
+        condition: service_started
+      postgres:
+        condition: service_healthy
+  ollama:
+    image: ollama/ollama:0.13.5
+    ports: ["127.0.0.1:11434:11434"]
+    volumes: ["ollama-data:/root/.ollama"]
+volumes:
+  postgres-data:
+  mlflow-data:
+  airflow-data:
+  ollama-data:
+

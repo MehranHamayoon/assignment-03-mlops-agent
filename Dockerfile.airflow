@@ -1,0 +1,13 @@
+FROM apache/airflow:3.1.6-python3.12
+USER root
+RUN apt-get update && apt-get install -y --no-install-recommends git \
+    && rm -rf /var/lib/apt/lists/*
+USER airflow
+COPY pyproject.toml /tmp/project/pyproject.toml
+RUN pip install --no-cache-dir "apache-airflow==3.1.6" \
+    "mlflow==3.18.0" "scikit-learn==1.9.1" "pandas==2.3.3" \
+    "pydantic-settings==2.16.2" "httpx==0.28.1" "PyYAML==6.0.3" "psycopg2-binary==2.9.11"
+ENV PYTHONPATH=/opt/project
+WORKDIR /opt/project
+ENTRYPOINT ["/bin/bash", "/opt/project/scripts/airflow-entrypoint.sh"]
+

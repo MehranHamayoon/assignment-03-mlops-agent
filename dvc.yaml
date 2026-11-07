@@ -1,0 +1,31 @@
+stages:
+  validate:
+    cmd: python -m training.train validate
+    deps: [data/iris.csv, training/train.py]
+    outs: [artifacts/validation.json]
+  preprocess:
+    cmd: python -m training.train preprocess
+    deps: [data/iris.csv, artifacts/validation.json, training/train.py]
+    outs: [artifacts/train.csv, artifacts/test.csv]
+  train:
+    cmd: python -m training.train train
+    deps: [artifacts/train.csv, artifacts/validation.json, training/train.py]
+    params: [train.c, train.max_iter]
+    outs: [artifacts/model.json]
+  evaluate:
+    cmd: python -m training.train evaluate
+    deps: [artifacts/model.json, artifacts/test.csv, training/train.py]
+    params: [train.quality_threshold]
+    outs:
+      - artifacts/evaluation.json:
+          cache: false
+      - artifacts/evaluated_model.json
+  quality_gate:
+    cmd: python -m training.train gate
+    deps: [artifacts/evaluation.json, artifacts/evaluated_model.json, training/train.py]
+    outs:
+      - artifacts/approved/model.json
+    metrics:
+      - artifacts/quality_gate.json:
+          cache: false
+
