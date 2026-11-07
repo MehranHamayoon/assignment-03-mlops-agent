@@ -12,8 +12,8 @@ def main():
     directory.mkdir(parents=True, exist_ok=True)
     entries = {
         p.relative_to(directory).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
-        for p in directory.rglob("*.json")
-        if p.name != "manifest.json"
+        for p in directory.rglob("*")
+        if p.suffix in (".json", ".jsonl") and p.name != "manifest.json"
     }
     commit = subprocess.run(
         ["git", "rev-parse", "HEAD"], capture_output=True, text=True, check=True, timeout=10

@@ -2,6 +2,7 @@
 
 import argparse
 import json
+import logging
 import time
 from pathlib import Path
 
@@ -39,6 +40,7 @@ def conversation(engine, message, path, required):
         raise RuntimeError(
             f"Conversation did not obtain required real evidence: {required - successful}"
         )
+    print(f"Verified {Path(path).name}: {', '.join(sorted(successful))}", flush=True)
     return response
 
 
@@ -49,6 +51,12 @@ def main():
     args = parser.parse_args()
     directory = Path(args.output)
     directory.mkdir(parents=True, exist_ok=True)
+    audit = logging.getLogger("mlops.tools")
+    audit.setLevel(logging.INFO)
+    handler = logging.FileHandler(directory / "tool-audit.jsonl", encoding="utf-8")
+    handler.setFormatter(logging.Formatter("%(message)s"))
+    audit.addHandler(handler)
+    audit.propagate = False
     settings = Settings()
     engine = Orchestrator(settings)
     if args.local_only:

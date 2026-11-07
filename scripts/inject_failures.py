@@ -61,7 +61,14 @@ def main():
         health = None
         while time.monotonic() < deadline:
             result = engine.registry.execute("k8s_health", {}, "failure-health")
-            if result.status == "ok" and result.data.get("unhealthy_pods"):
+            if (
+                result.status == "ok"
+                and result.data.get("unhealthy_pods")
+                and any(
+                    event.get("reason") == "Unhealthy" and "503" in event.get("message", "")
+                    for event in result.data.get("events", [])
+                )
+            ):
                 health = result
                 break
             time.sleep(3)
