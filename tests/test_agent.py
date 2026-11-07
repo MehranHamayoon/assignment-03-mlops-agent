@@ -32,6 +32,22 @@ def test_tool_selection_and_execution(settings):
     assert "Made up" not in result.model_dump_json()
 
 
+def test_planner_runs_once_and_does_not_reprocess_operational_payloads(settings):
+    registry = Registry()
+    registry.add(Tool("dvc_datasets", "datasets", EmptyArgs, lambda: {"datasets": ["iris"]}))
+    planner = Mock()
+    planner.next_message.return_value = {
+        "role": "assistant",
+        "tool_calls": [
+            {"function": {"name": "dvc_datasets", "arguments": {}}},
+            {"function": {"name": "dvc_datasets", "arguments": {}}},
+        ],
+    }
+    result = Orchestrator(settings, registry, planner).chat("List datasets")
+    planner.next_message.assert_called_once()
+    assert len(result.evidence) == 1
+
+
 def test_unavailable_tool_never_becomes_an_operational_fact(settings):
     registry = Registry()
     registry.add(

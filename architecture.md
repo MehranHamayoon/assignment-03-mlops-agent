@@ -19,7 +19,9 @@ flowchart TB
   C --> V
 ```
 
-The LLM selects tools through Ollama's supported `tools` API. Pydantic validates arguments
+The LLM selects tools through Ollama's supported `tools` API in one bounded planning call.
+Typed Python workflows resolve dependent references; large service payloads are not returned
+to an iterative LLM loop. Pydantic validates arguments
 again at execution, rejects extra fields and bounds inputs. There is no shell execution tool.
 DVC subprocess arguments are fixed, shell-free, timeout-bounded and revision/path-validated.
 The registry centralizes authorization, redaction and JSON audit logs. External logs and

@@ -14,7 +14,7 @@ subset. This small demonstration does not establish generalization to production
 
 Source: [scikit-learn Iris loader](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_iris.html),
 which documents the original Fisher/Anderson Iris dataset and its provenance. The dataset is
-publicly available under CC BY 4.0 through the UCI source described by scikit-learn.
+publicly available under CC BY 4.0 through the [UCI Iris source](https://archive.ics.uci.edu/dataset/53/iris).
 
 Raw CSV content is DVC-tracked; `.dvc` metadata and Git tags are in the repository. Run
 `python -m scripts.seed_remote` after a fresh clone to regenerate both exact versions and

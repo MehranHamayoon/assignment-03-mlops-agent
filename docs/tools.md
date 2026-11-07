@@ -27,6 +27,7 @@ schemas at authenticated `GET /tools`. Operational tool data is not executed as 
 | `k8s_health` | approved namespace | Correlate pods, rollout, Services, endpoints and pod events |
 | `k8s_restart` | approved namespace/deployment | Propose restart; exact confirmation and optional patch RBAC required |
 | `assess_model` | none | Read-only dependency-ordered investigation across all four systems |
+| `trace_dataset` | run ID | Read MLflow provenance then verify its actual committed DVC hash |
 
 Namespaced operations use `APPROVED_NAMESPACE` (default `mlops`), application selector
 `app=iris-api`, and `APPROVED_DEPLOYMENT` (default `iris-api`). Airflow tools use

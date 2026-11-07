@@ -76,7 +76,7 @@ def main():
     conversation(
         engine,
         f"Which dataset version was used for MLflow run {run_id}? "
-        "Retrieve the run, then verify its recorded DVC metadata and hash.",
+        "Use trace_dataset to retrieve the run and verify its recorded DVC metadata and hash.",
         directory / "01-dataset-provenance.json",
         {"mlflow_run", "dvc_version"},
     )

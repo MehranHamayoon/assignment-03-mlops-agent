@@ -6,12 +6,14 @@
 
 The system gives an engineer one conversational interface for dataset provenance, experiment
 comparison, workflow execution and deployment diagnosis. It implements four independently
-callable tool modules and a supported LLM tool-calling loop. The architecture follows the
+callable tool modules and a supported LLM tool-calling planning step. The architecture follows the
 assignment's first figure; its Airflow DAG follows the required five-stage second figure.
 The complete flow and training diagram are in [architecture.md](../architecture.md).
 
-FastAPI validates and authenticates requests. Ollama chooses JSON-schema tools through
-`/api/chat`. A central registry validates each call again, applies allowlists, proposes changes,
+FastAPI validates and authenticates requests. Ollama chooses JSON-schema tools in one bounded
+`/api/chat` request. Typed Python workflows resolve dependent references from actual tool results;
+large operational payloads are never fed through repeated LLM turns. A central registry
+validates each call again, applies allowlists, proposes changes,
 measures duration and records a request ID. DVC subprocesses, MlflowClient, Airflow 3 REST API
 v2 and the Kubernetes Python client return actual observations. A deterministic response
 builder exposes those observations as facts, with explicit unknowns and rule-supported
@@ -69,7 +71,7 @@ and memory requests/limits, a ConfigMap, non-root identity and a read-only root 
 `/version` reports loaded model lineage. The operations adapter checks Pods, restart counts,
 Deployment generations/replicas/images, Services, ready endpoints, relevant events and bounded logs.
 
-[Tool definitions and permissions](tools.md) document all 21 callable operations. Read-only
+[Tool definitions and permissions](tools.md) document all 22 callable operations. Read-only
 Kubernetes RBAC is supplied by default. A separately installed optional Role permits patching
 only `iris-api`. Namespace and deployment checks run before proposals or SDK operations.
 Airflow triggers are restricted to the approved training DAG and typed bounded parameters.
@@ -78,7 +80,7 @@ the model cannot manufacture confirmation flags or change the stored arguments.
 
 ## 4. Tests and real-service demonstrations
 
-The local suite has **26 passing tests** and approximately **77% aggregate statement coverage**
+The local suite has **27 passing tests** and approximately **76% aggregate statement coverage**
 across agent, API and training. The tests cover successful tool selection/execution, invalid
 arguments, missing services, timeouts, absence of invented results, forbidden cluster changes,
 forged/replayed/expired confirmations, credential redaction, MLflow ranking, DVC path/revision
@@ -138,8 +140,10 @@ reported as a completed end-to-end training demonstration until the stages were 
 * The Iris hold-out set is small; production needs broader validation, monitoring and drift tests.
 * F1 ranking, observed Kubernetes readiness and model identity are separate signals. No drift
   monitoring service is implemented; missing degradation/freshness evidence remains unknown.
-* The small local LLM can select tools inconsistently. Call/step budgets bound its execution;
-  a typed built-in assessment workflow handles the mandatory dependent investigation.
+* The small local LLM can select tools inconsistently. One bounded planning call and a response
+  token limit prevent repetitive tool loops. Built-in provenance and assessment workflows
+  resolve dependent references. New kinds of dependent investigations require another typed
+  workflow; the planner does not perform open-ended iterative reasoning over service payloads.
 * Confirmations are in-memory in one agent process. Multiple workers need an atomic shared
   store, user-specific authorization, persistent auditing and an identity provider.
 * The Airflow standalone/SimpleAuthManager stack and local DVC remote are development choices.

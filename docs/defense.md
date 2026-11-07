@@ -1,6 +1,7 @@
 # Engineering defense / evaluation guide
 
 1. **Why an LLM?** Natural-language tool selection uses Ollama's supported structured tool API.
+   One planning request selects tools; typed Python workflows resolve dependent references.
    The orchestration and permissions remain ordinary tested Python. The LLM cannot fabricate
    output fields or bypass schemas, confirmations or namespace checks.
 2. **Why DVC plus Git?** Git versions code and small metadata; DVC content-addresses dataset bytes.

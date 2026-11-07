@@ -36,7 +36,7 @@ def live():
 
 @app.get("/tools", dependencies=[Depends(authenticate)])
 def tools():
-    return engine().registry.definitions()
+    return engine().definitions()
 
 
 @app.post("/chat", response_model=ChatResponse, dependencies=[Depends(authenticate)])
