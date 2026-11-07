@@ -1,0 +1,35 @@
+{
+  "mode": "real_http_service",
+  "live": {
+    "status": "alive"
+  },
+  "ready": {
+    "status": "ready",
+    "model_run_id": "4263c73f96a94694a673b1d9a77ae432"
+  },
+  "version": {
+    "app_version": "1.0.0",
+    "run_id": "4263c73f96a94694a673b1d9a77ae432",
+    "provenance": {
+      "rows": 150,
+      "dataset.md5": "4224576f0267bf88902f87f0f6200967",
+      "dataset.dvc_file": "data/iris.csv.dvc",
+      "dataset.git_commit": "617b9264b11c1835b3179c8145fc6aa8cf7497f3",
+      "dataset.version": "md5:4224576f0267bf88902f87f0f6200967",
+      "valid": true
+    }
+  },
+  "prediction": {
+    "predictions": [
+      0
+    ],
+    "probabilities": [
+      [
+        0.9811188990972802,
+        0.018880598401102688,
+        5.025016171914958e-07
+      ]
+    ],
+    "model_run_id": "4263c73f96a94694a673b1d9a77ae432"
+  }
+}

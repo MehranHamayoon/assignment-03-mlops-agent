@@ -32,13 +32,13 @@ def main():
             capture_output=True,
             timeout=30,
         )
-        for args in (
+        for dvc_args in (
             ("remote", "add", "--local", "-d", "storage", str(root / "dvc-remote")),
             ("pull", "data/iris.csv.dvc"),
             ("checkout", "data/iris.csv.dvc"),
         ):
             subprocess.run(
-                [sys.executable, "-m", "dvc", *args],
+                [sys.executable, "-m", "dvc", *dvc_args],
                 cwd=destination,
                 check=True,
                 capture_output=True,
