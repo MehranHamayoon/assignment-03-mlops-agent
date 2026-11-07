@@ -21,5 +21,5 @@ class Settings(BaseSettings):
     ollama_model: str = "qwen3:1.7b"
     agent_api_key: SecretStr = SecretStr("")
     tool_timeout: float = Field(15, ge=0.1, le=120)
-    model_path: Path = Path("artifacts/model.json")
+    model_path: Path = Path("artifacts/approved/model.json")
     app_version: str = "1.0.0"
