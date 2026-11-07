@@ -110,6 +110,53 @@ def test_failed_quality_gate_supports_retraining_recommendation():
     assert any("retraining run is warranted" in r for r in result.recommendations)
 
 
+def test_provenance_workflow_uses_recorded_reference_instead_of_guessed_values(settings):
+    registry = Registry()
+
+    def execute(name, args, request_id):
+        data = {
+            "tags": {
+                "dataset.git_commit": "c" * 40,
+                "dataset.dvc_file": "data/iris.csv.dvc",
+                "dataset.md5": "recorded-hash",
+            }
+        }
+        if name == "dvc_version":
+            assert args == {
+                "rev": "c" * 40,
+                "dvc_file": "data/iris.csv.dvc",
+                "expected_md5": "recorded-hash",
+            }
+            data = {"recorded_hash_matches": True}
+        return Evidence(tool=name, status="ok", data=data, request_id=request_id, duration_ms=1)
+
+    registry.execute = Mock(side_effect=execute)
+    result = Orchestrator(settings, registry, Planner("trace_dataset", {"run_id": "a" * 32})).chat(
+        "Verify this run's training data"
+    )
+    assert [e.tool for e in result.evidence] == ["mlflow_run", "dvc_version"]
+    assert result.evidence[-1].data["recorded_hash_matches"] is True
+
+
+def test_missing_recorded_lineage_is_an_unknown_not_an_invented_git_reference(settings):
+    registry = Registry()
+    registry.execute = Mock(
+        return_value=Evidence(
+            tool="mlflow_run",
+            status="ok",
+            data={"tags": {}},
+            request_id="r",
+            duration_ms=1,
+        )
+    )
+    result = Orchestrator(settings, registry, Planner("trace_dataset", {"run_id": "a" * 32})).chat(
+        "Find this run's dataset"
+    )
+    assert registry.execute.call_count == 1
+    assert result.evidence[-1].error == "missing_recorded_provenance"
+    assert any("unknown" in u for u in result.uncertainties)
+
+
 def test_agent_api_requires_authentication_and_validates_payload(settings, monkeypatch):
     from agent import main
 

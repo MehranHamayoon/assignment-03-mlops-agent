@@ -80,7 +80,7 @@ the model cannot manufacture confirmation flags or change the stored arguments.
 
 ## 4. Tests and real-service demonstrations
 
-The local suite has **27 passing tests** and approximately **76% aggregate statement coverage**
+The local suite has **29 passing tests** and approximately **77% aggregate statement coverage**
 across agent, API and training. The tests cover successful tool selection/execution, invalid
 arguments, missing services, timeouts, absence of invented results, forbidden cluster changes,
 forged/replayed/expired confirmations, credential redaction, MLflow ranking, DVC path/revision
