@@ -54,6 +54,7 @@ python -m scripts.wait_services --airflow --seconds 360
 ```
 
 `scripts.configure` creates random credentials in ignored `.env`; it never prints them.
+On Linux it also sets the Airflow container UID to the host UID so run artifacts are writable.
 Review `.env.example` for every setting. In PowerShell, import `.env` into the current process
 with the following command before running training or the demo (Bash: `set -a; source .env; set +a`):
 

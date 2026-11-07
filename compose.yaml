@@ -18,6 +18,7 @@ services:
     ports: ["127.0.0.1:5000:5000"]
     volumes: ["mlflow-data:/mlflow"]
   airflow:
+    user: "${AIRFLOW_UID:-50000}:0"
     build:
       context: .
       dockerfile: Dockerfile.airflow
