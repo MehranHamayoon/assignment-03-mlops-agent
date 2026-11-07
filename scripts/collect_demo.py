@@ -92,9 +92,7 @@ def main():
     )
     compared = next(e.data for e in comparison_result.evidence if e.tool == "mlflow_compare")
     if compared.get("best_run") is None or len(compared.get("runs", [])) != 5:
-        raise RuntimeError(
-            "Live comparison must rank five real runs and select a candidate"
-        )
+        raise RuntimeError("Live comparison must rank five real runs and select a candidate")
     if compared.get("metric") != "f1":
         raise RuntimeError("Live comparison did not use the recorded f1 metric")
     trigger = engine.chat(
