@@ -32,8 +32,9 @@ python -m pytest -q
 
 Ordinary CI uses mocked external calls and never needs a cluster, LLM, cloud subscription or API key.
 The separate **Live integration demonstration** workflow launches real disposable services on a
-GitHub-hosted Ubuntu runner, exercises five conversations, injects two failures, and commits
-sanitized evidence under `evidence/live/`. Its Actions logs and artifacts provide an independent
+GitHub-hosted Ubuntu runner, exercises five conversations, injects two failures, and exports
+sanitized evidence artifacts. Reviewed exports are included under `evidence/live/` in this submission.
+Its Actions logs and artifacts provide an independent
 execution record. Re-run it from **Actions → Live integration demonstration → Run workflow**.
 
 ## Configure and launch the services
