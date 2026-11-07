@@ -1,0 +1,50 @@
+name: Live integration demonstration
+on:
+  workflow_dispatch:
+  push:
+    paths: [.github/workflows/demo.yml]
+permissions:
+  contents: read
+concurrency:
+  group: live-integration
+  cancel-in-progress: false
+jobs:
+  real-services:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    env:
+      MLFLOW_TRACKING_URI: http://127.0.0.1:5000
+      MLFLOW_DISABLE_TELEMETRY: 'true'
+      MLFLOW_DISABLE_AGENT_HINT: '1'
+      DVC_NO_ANALYTICS: 'true'
+      PYTHONUTF8: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: requirements.lock
+      - name: Install pinned environment
+        run: |
+          python -m pip install -r requirements.lock
+          python -m pip install --no-deps -e .
+          python -m scripts.configure
+      - name: Run real services, five conversations and two failure investigations
+        run: bash scripts/live_demo.sh
+      - name: Record reproducibility manifest
+        if: always()
+        run: python -m scripts.evidence_manifest
+      - name: Upload actual evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: actual-service-evidence
+          path: evidence/live/
+      - name: Service diagnostics on failure
+        if: failure()
+        run: |
+          docker logs --tail 120 assignment-airflow || true
+          kubectl -n mlops get pods || true
