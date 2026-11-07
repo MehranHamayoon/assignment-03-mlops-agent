@@ -1,0 +1,15 @@
+{
+  "mode": "real_local_failure",
+  "evaluation": {
+    "run_id": "f02000105cb442f0b0b39323e6d0fb8c",
+    "metrics": {
+      "f1": 0.7833333333333333,
+      "accuracy": 0.7894736842105263
+    },
+    "threshold": 1.0
+  },
+  "error": "Quality gate failed: f1=0.7833 < 1.0",
+  "approved_model_exists": false,
+  "root_cause": "Deliberately undertrained model failed the configured F1 threshold",
+  "resolution": "Use a validated model configuration and rerun all stages"
+}

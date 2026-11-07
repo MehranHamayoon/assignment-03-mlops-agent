@@ -6,6 +6,7 @@ import json
 import logging
 import os
 import subprocess
+import sys
 from pathlib import Path
 
 import numpy as np
@@ -127,6 +128,8 @@ def predict_json(model: dict, features) -> tuple[np.ndarray, np.ndarray]:
 
 
 def evaluate(directory="artifacts", threshold=0.85):
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")
     import mlflow
     from mlflow import MlflowClient
 

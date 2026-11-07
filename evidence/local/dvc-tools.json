@@ -1,0 +1,50 @@
+{
+  "datasets": {
+    "datasets": [
+      {
+        "git_commit": "617b9264b11c1835b3179c8145fc6aa8cf7497f3",
+        "dvc_file": "data/iris.csv.dvc",
+        "outputs": [
+          {
+            "md5": "4224576f0267bf88902f87f0f6200967",
+            "size": 2757,
+            "hash": "md5",
+            "path": "iris.csv"
+          }
+        ],
+        "recorded_hash_matches": null,
+        "reproduce_in_new_clone": [
+          "git clone <repository-url> reproduced-dataset",
+          "cd reproduced-dataset",
+          "git checkout 617b9264b11c1835b3179c8145fc6aa8cf7497f3",
+          "dvc remote add --local -d storage <authorized-remote-path>",
+          "dvc pull data/iris.csv.dvc",
+          "dvc checkout data/iris.csv.dvc"
+        ],
+        "remote_note": "Remote availability is not implied by committed metadata."
+      }
+    ]
+  },
+  "status": {
+    "changed": false,
+    "details": {}
+  },
+  "comparison": {
+    "old_commit": "a71276b5f1e0a36366c0f58faf59e345357973c2",
+    "new_commit": "c73c77748c5833be41259e4cc641db3d89857d37",
+    "diff": {
+      "added": [],
+      "deleted": [],
+      "modified": [
+        {
+          "path": "data\\iris.csv",
+          "hash": {
+            "old": "4a3beb7462eb695a87c685647c3245c2",
+            "new": "4224576f0267bf88902f87f0f6200967"
+          }
+        }
+      ],
+      "renamed": []
+    }
+  }
+}

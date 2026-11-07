@@ -1,0 +1,117 @@
+schema: '2.0'
+stages:
+  validate:
+    cmd: python -m training.train validate
+    deps:
+    - path: data/iris.csv
+      hash: md5
+      md5: 4224576f0267bf88902f87f0f6200967
+      size: 2757
+    - path: training/train.py
+      hash: md5
+      md5: 3758052c361e051edd720ed4e33ac0fa
+      size: 9772
+    outs:
+    - path: artifacts/validation.json
+      hash: md5
+      md5: 435c863155f09164ba1f94df2233b90a
+      size: 268
+  preprocess:
+    cmd: python -m training.train preprocess
+    deps:
+    - path: artifacts/validation.json
+      hash: md5
+      md5: 435c863155f09164ba1f94df2233b90a
+      size: 268
+    - path: data/iris.csv
+      hash: md5
+      md5: 4224576f0267bf88902f87f0f6200967
+      size: 2757
+    - path: training/train.py
+      hash: md5
+      md5: 3758052c361e051edd720ed4e33ac0fa
+      size: 9772
+    outs:
+    - path: artifacts/test.csv
+      hash: md5
+      md5: e61cd3dd1fd48a1637ace80edd320ca3
+      size: 780
+    - path: artifacts/train.csv
+      hash: md5
+      md5: 6bcfde3960a3c869cedba145d44c8fe3
+      size: 2186
+  train:
+    cmd: python -m training.train train
+    deps:
+    - path: artifacts/train.csv
+      hash: md5
+      md5: 6bcfde3960a3c869cedba145d44c8fe3
+      size: 2186
+    - path: artifacts/validation.json
+      hash: md5
+      md5: 435c863155f09164ba1f94df2233b90a
+      size: 268
+    - path: training/train.py
+      hash: md5
+      md5: 3758052c361e051edd720ed4e33ac0fa
+      size: 9772
+    params:
+      params.yaml:
+        train.c: 1.0
+        train.max_iter: 300
+    outs:
+    - path: artifacts/model.json
+      hash: md5
+      md5: 72ed578a96f2634241d4cee25f561d52
+      size: 1368
+  evaluate:
+    cmd: python -m training.train evaluate
+    deps:
+    - path: artifacts/model.json
+      hash: md5
+      md5: 72ed578a96f2634241d4cee25f561d52
+      size: 1368
+    - path: artifacts/test.csv
+      hash: md5
+      md5: e61cd3dd1fd48a1637ace80edd320ca3
+      size: 780
+    - path: training/train.py
+      hash: md5
+      md5: 3758052c361e051edd720ed4e33ac0fa
+      size: 9772
+    params:
+      params.yaml:
+        train.quality_threshold: 0.85
+    outs:
+    - path: artifacts/evaluated_model.json
+      hash: md5
+      md5: c0d992c3fe1db831e7cf50be305ce8cb
+      size: 1417
+    - path: artifacts/evaluation.json
+      hash: md5
+      md5: 77abae54be9ea1b7e65df4238b3a6b66
+      size: 165
+  quality_gate:
+    cmd: python -m training.train gate
+    deps:
+    - path: artifacts/evaluated_model.json
+      hash: md5
+      md5: c0d992c3fe1db831e7cf50be305ce8cb
+      size: 1417
+    - path: artifacts/evaluation.json
+      hash: md5
+      md5: 77abae54be9ea1b7e65df4238b3a6b66
+      size: 165
+    - path: training/train.py
+      hash: md5
+      md5: 3758052c361e051edd720ed4e33ac0fa
+      size: 9772
+    outs:
+    - path: artifacts/approved/model.json
+      hash: md5
+      md5: c0d992c3fe1db831e7cf50be305ce8cb
+      size: 1417
+    - path: artifacts/quality_gate.json
+      hash: md5
+      md5: ca1c5ffbdd0f9b442646444dd9e7eab1
+      size: 184

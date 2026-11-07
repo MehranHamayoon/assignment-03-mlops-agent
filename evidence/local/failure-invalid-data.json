@@ -1,0 +1,18 @@
+{
+  "mode": "real_local_failure",
+  "error": "Dataset columns do not match the required schema",
+  "dvc_status": {
+    "changed": true,
+    "details": {
+      "data\\iris.csv.dvc": [
+        {
+          "changed outs": {
+            "data\\iris.csv": "modified"
+          }
+        }
+      ]
+    }
+  },
+  "root_cause": "Input schema was deliberately corrupted",
+  "resolution": "Restored original dataset bytes; validation rerun below"
+}

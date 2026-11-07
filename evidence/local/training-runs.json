@@ -1,0 +1,303 @@
+{
+  "mode": "real_mlflow_server",
+  "runs": [
+    {
+      "run_id": "d972740bd4474074a7ef2bde51ac1be2",
+      "metrics": {
+        "f1": 0.8452380952380952,
+        "accuracy": 0.8421052631578947
+      },
+      "threshold": 0.85,
+      "quality_gate": "failed"
+    },
+    {
+      "run_id": "4d4c7d415e6c4692a2f31179631a850d",
+      "metrics": {
+        "f1": 0.8974358974358975,
+        "accuracy": 0.8947368421052632
+      },
+      "threshold": 0.85,
+      "quality_gate": "passed"
+    },
+    {
+      "run_id": "3229835bfb8046f390449f8e74ce2499",
+      "metrics": {
+        "f1": 0.9229629629629629,
+        "accuracy": 0.9210526315789473
+      },
+      "threshold": 0.85,
+      "quality_gate": "passed"
+    },
+    {
+      "run_id": "94c5ba75b7bf425b8e68e0c45e752286",
+      "metrics": {
+        "f1": 0.9487179487179488,
+        "accuracy": 0.9473684210526315
+      },
+      "threshold": 0.85,
+      "quality_gate": "passed"
+    },
+    {
+      "run_id": "7d86b9c462104ddcb2f876dbc9ba54d8",
+      "metrics": {
+        "f1": 0.9487179487179488,
+        "accuracy": 0.9473684210526315
+      },
+      "threshold": 0.85,
+      "quality_gate": "passed"
+    }
+  ],
+  "comparison": {
+    "runs": [
+      {
+        "run_id": "81e3faf816a74c16aaeeefcec8c445ec",
+        "experiment_id": "1",
+        "status": "FINISHED",
+        "start_time_ms": 1794067027002,
+        "metrics": {
+          "f1": 0.9229629629629629,
+          "accuracy": 0.9210526315789473
+        },
+        "parameters": {
+          "c": "1.0",
+          "max_iter": "300",
+          "random_state": "42"
+        },
+        "tags": {
+          "mlflow.user": "LENOVO",
+          "mlflow.source.name": "D:\\MLOPS\\A3\\scripts\\local_experiments.py",
+          "mlflow.source.type": "LOCAL",
+          "mlflow.source.git.commit": "617b9264b11c1835b3179c8145fc6aa8cf7497f3",
+          "mlflow.source.git.branch": "main",
+          "mlflow.source.git.repoURL": "https://github.com/MehranHamayoon/assignment-03-mlops-agent.git",
+          "mlflow.runName": "shivering-hound-592",
+          "dataset.md5": "4224576f0267bf88902f87f0f6200967",
+          "dataset.dvc_file": "data/iris.csv.dvc",
+          "dataset.git_commit": "617b9264b11c1835b3179c8145fc6aa8cf7497f3",
+          "dataset.version": "md5:4224576f0267bf88902f87f0f6200967",
+          "quality_gate": "passed",
+          "quality_threshold": "0.85",
+          "model.portable_format": "json-logistic-regression"
+        }
+      },
+      {
+        "run_id": "7d86b9c462104ddcb2f876dbc9ba54d8",
+        "experiment_id": "1",
+        "status": "FINISHED",
+        "start_time_ms": 1794067026072,
+        "metrics": {
+          "f1": 0.9487179487179488,
+          "accuracy": 0.9473684210526315
+        },
+        "parameters": {
+          "c": "10.0",
+          "max_iter": "300",
+          "random_state": "42"
+        },
+        "tags": {
+          "mlflow.user": "LENOVO",
+          "mlflow.source.name": "D:\\MLOPS\\A3\\scripts\\local_experiments.py",
+          "mlflow.source.type": "LOCAL",
+          "mlflow.source.git.commit": "617b9264b11c1835b3179c8145fc6aa8cf7497f3",
+          "mlflow.source.git.branch": "main",
+          "mlflow.source.git.repoURL": "https://github.com/MehranHamayoon/assignment-03-mlops-agent.git",
+          "mlflow.runName": "melodic-snipe-343",
+          "dataset.md5": "4224576f0267bf88902f87f0f6200967",
+          "dataset.dvc_file": "data/iris.csv.dvc",
+          "dataset.git_commit": "617b9264b11c1835b3179c8145fc6aa8cf7497f3",
+          "dataset.version": "md5:4224576f0267bf88902f87f0f6200967",
+          "quality_gate": "passed",
+          "quality_threshold": "0.85",
+          "model.portable_format": "json-logistic-regression"
+        }
+      },
+      {
+        "run_id": "94c5ba75b7bf425b8e68e0c45e752286",
+        "experiment_id": "1",
+        "status": "FINISHED",
+        "start_time_ms": 1794067025169,
+        "metrics": {
+          "f1": 0.9487179487179488,
+          "accuracy": 0.9473684210526315
+        },
+        "parameters": {
+          "c": "3.0",
+          "max_iter": "300",
+          "random_state": "42"
+        },
+        "tags": {
+          "mlflow.user": "LENOVO",
+          "mlflow.source.name": "D:\\MLOPS\\A3\\scripts\\local_experiments.py",
+          "mlflow.source.type": "LOCAL",
+          "mlflow.source.git.commit": "617b9264b11c1835b3179c8145fc6aa8cf7497f3",
+          "mlflow.source.git.branch": "main",
+          "mlflow.source.git.repoURL": "https://github.com/MehranHamayoon/assignment-03-mlops-agent.git",
+          "mlflow.runName": "indecisive-kite-784",
+          "dataset.md5": "4224576f0267bf88902f87f0f6200967",
+          "dataset.dvc_file": "data/iris.csv.dvc",
+          "dataset.git_commit": "617b9264b11c1835b3179c8145fc6aa8cf7497f3",
+          "dataset.version": "md5:4224576f0267bf88902f87f0f6200967",
+          "quality_gate": "passed",
+          "quality_threshold": "0.85",
+          "model.portable_format": "json-logistic-regression"
+        }
+      },
+      {
+        "run_id": "3229835bfb8046f390449f8e74ce2499",
+        "experiment_id": "1",
+        "status": "FINISHED",
+        "start_time_ms": 1794067024260,
+        "metrics": {
+          "f1": 0.9229629629629629,
+          "accuracy": 0.9210526315789473
+        },
+        "parameters": {
+          "c": "1.0",
+          "max_iter": "300",
+          "random_state": "42"
+        },
+        "tags": {
+          "mlflow.user": "LENOVO",
+          "mlflow.source.name": "D:\\MLOPS\\A3\\scripts\\local_experiments.py",
+          "mlflow.source.type": "LOCAL",
+          "mlflow.source.git.commit": "617b9264b11c1835b3179c8145fc6aa8cf7497f3",
+          "mlflow.source.git.branch": "main",
+          "mlflow.source.git.repoURL": "https://github.com/MehranHamayoon/assignment-03-mlops-agent.git",
+          "mlflow.runName": "receptive-rook-303",
+          "dataset.md5": "4224576f0267bf88902f87f0f6200967",
+          "dataset.dvc_file": "data/iris.csv.dvc",
+          "dataset.git_commit": "617b9264b11c1835b3179c8145fc6aa8cf7497f3",
+          "dataset.version": "md5:4224576f0267bf88902f87f0f6200967",
+          "quality_gate": "passed",
+          "quality_threshold": "0.85",
+          "model.portable_format": "json-logistic-regression"
+        }
+      },
+      {
+        "run_id": "4d4c7d415e6c4692a2f31179631a850d",
+        "experiment_id": "1",
+        "status": "FINISHED",
+        "start_time_ms": 1794067023342,
+        "metrics": {
+          "f1": 0.8974358974358975,
+          "accuracy": 0.8947368421052632
+        },
+        "parameters": {
+          "c": "0.3",
+          "max_iter": "300",
+          "random_state": "42"
+        },
+        "tags": {
+          "mlflow.user": "LENOVO",
+          "mlflow.source.name": "D:\\MLOPS\\A3\\scripts\\local_experiments.py",
+          "mlflow.source.type": "LOCAL",
+          "mlflow.source.git.commit": "617b9264b11c1835b3179c8145fc6aa8cf7497f3",
+          "mlflow.source.git.branch": "main",
+          "mlflow.source.git.repoURL": "https://github.com/MehranHamayoon/assignment-03-mlops-agent.git",
+          "mlflow.runName": "traveling-fish-814",
+          "dataset.md5": "4224576f0267bf88902f87f0f6200967",
+          "dataset.dvc_file": "data/iris.csv.dvc",
+          "dataset.git_commit": "617b9264b11c1835b3179c8145fc6aa8cf7497f3",
+          "dataset.version": "md5:4224576f0267bf88902f87f0f6200967",
+          "quality_gate": "passed",
+          "quality_threshold": "0.85",
+          "model.portable_format": "json-logistic-regression"
+        }
+      }
+    ],
+    "days": 30,
+    "experiment_ids": [
+      "1"
+    ],
+    "selection_scope": "latest 5 runs",
+    "metric": "f1",
+    "direction": "maximize",
+    "best_run": {
+      "run_id": "7d86b9c462104ddcb2f876dbc9ba54d8",
+      "experiment_id": "1",
+      "status": "FINISHED",
+      "start_time_ms": 1794067026072,
+      "metrics": {
+        "f1": 0.9487179487179488,
+        "accuracy": 0.9473684210526315
+      },
+      "parameters": {
+        "c": "10.0",
+        "max_iter": "300",
+        "random_state": "42"
+      },
+      "tags": {
+        "mlflow.user": "LENOVO",
+        "mlflow.source.name": "D:\\MLOPS\\A3\\scripts\\local_experiments.py",
+        "mlflow.source.type": "LOCAL",
+        "mlflow.source.git.commit": "617b9264b11c1835b3179c8145fc6aa8cf7497f3",
+        "mlflow.source.git.branch": "main",
+        "mlflow.source.git.repoURL": "https://github.com/MehranHamayoon/assignment-03-mlops-agent.git",
+        "mlflow.runName": "melodic-snipe-343",
+        "dataset.md5": "4224576f0267bf88902f87f0f6200967",
+        "dataset.dvc_file": "data/iris.csv.dvc",
+        "dataset.git_commit": "617b9264b11c1835b3179c8145fc6aa8cf7497f3",
+        "dataset.version": "md5:4224576f0267bf88902f87f0f6200967",
+        "quality_gate": "passed",
+        "quality_threshold": "0.85",
+        "model.portable_format": "json-logistic-regression"
+      }
+    },
+    "ranking": [
+      "7d86b9c462104ddcb2f876dbc9ba54d8",
+      "94c5ba75b7bf425b8e68e0c45e752286",
+      "81e3faf816a74c16aaeeefcec8c445ec",
+      "3229835bfb8046f390449f8e74ce2499",
+      "4d4c7d415e6c4692a2f31179631a850d"
+    ],
+    "rationale": "maximize recorded f1 among finished runs in this scope.",
+    "production_readiness": "Not established by metric ranking; inspect quality gate, lineage, deployment health, and monitoring separately."
+  },
+  "registry": {
+    "name": "iris-classifier",
+    "versions": [
+      {
+        "version": "7",
+        "run_id": "81e3faf816a74c16aaeeefcec8c445ec",
+        "status": "READY",
+        "aliases": []
+      },
+      {
+        "version": "6",
+        "run_id": "7d86b9c462104ddcb2f876dbc9ba54d8",
+        "status": "READY",
+        "aliases": []
+      },
+      {
+        "version": "5",
+        "run_id": "94c5ba75b7bf425b8e68e0c45e752286",
+        "status": "READY",
+        "aliases": []
+      },
+      {
+        "version": "4",
+        "run_id": "3229835bfb8046f390449f8e74ce2499",
+        "status": "READY",
+        "aliases": []
+      },
+      {
+        "version": "3",
+        "run_id": "4d4c7d415e6c4692a2f31179631a850d",
+        "status": "READY",
+        "aliases": []
+      },
+      {
+        "version": "2",
+        "run_id": "d972740bd4474074a7ef2bde51ac1be2",
+        "status": "READY",
+        "aliases": []
+      },
+      {
+        "version": "1",
+        "run_id": "5216ef8d1e744cf38574ce3bc49570b7",
+        "status": "READY",
+        "aliases": []
+      }
+    ]
+  }
+}

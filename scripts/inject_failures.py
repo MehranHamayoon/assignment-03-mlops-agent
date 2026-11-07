@@ -77,7 +77,7 @@ def main():
                 "injection": "Set MODEL_PATH=/missing/model.json in isolated demo namespace",
                 "health": health.model_dump(),
                 "logs": logs,
-                "root_cause": "No model loaded; readiness returns HTTP 503 and rollout cannot complete",
+                "root_cause": "No model loaded; readiness returns 503 and rollout cannot complete",
                 "resolution": "Restore MODEL_PATH=/opt/model/model.json and verify rollout",
             },
         )

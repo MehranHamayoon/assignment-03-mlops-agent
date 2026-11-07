@@ -1,3 +1,4 @@
+import argparse
 import hashlib
 import json
 import subprocess
@@ -7,6 +8,9 @@ from pathlib import Path
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--output", default="evidence/local/reproduction.json")
+    args = parser.parse_args()
     root = Path.cwd().resolve()
     parent = root / "tmp" / "reproduction" / uuid.uuid4().hex[:8]
     parent.mkdir(parents=True, exist_ok=True)
@@ -49,9 +53,8 @@ def main():
                 "result": "Restored from DVC remote in a fresh Git clone",
             }
         )
-    Path("evidence/local/reproduction.json").write_text(
-        json.dumps(records, indent=2) + "\n", encoding="utf-8"
-    )
+    Path(args.output).parent.mkdir(parents=True, exist_ok=True)
+    Path(args.output).write_text(json.dumps(records, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(records, indent=2))
 
 
