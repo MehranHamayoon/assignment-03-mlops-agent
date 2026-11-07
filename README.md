@@ -1,6 +1,7 @@
 # Evidence-based MLOps AI Agent
 
 [![CI](https://github.com/MehranHamayoon/assignment-03-mlops-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/MehranHamayoon/assignment-03-mlops-agent/actions/workflows/ci.yml)
+[![Live integration](https://github.com/MehranHamayoon/assignment-03-mlops-agent/actions/workflows/demo.yml/badge.svg)](https://github.com/MehranHamayoon/assignment-03-mlops-agent/actions/workflows/demo.yml)
 
 A Python agent that chooses structured tools through Ollama, inspects **real DVC, MLflow,
 Airflow 3 and Kubernetes systems**, and returns observed facts, uncertainties and recommended
@@ -9,7 +10,13 @@ actions with the underlying tool evidence. The example ML workload is an Iris cl
 **Submission entry points:** [technical report](docs/technical-report.md),
 [architecture](architecture.md), [requirements checklist](docs/requirements.md),
 [tool catalog](docs/tools.md), [evidence index](evidence/README.md), and
-[engineering defense](docs/defense.md). No account credentials are needed to inspect this repository.
+[engineering defense](docs/defense.md). Read the [five tested conversations](docs/demo-conversations.md)
+for a concise walkthrough of the actual results. No account credentials are needed to inspect this repository.
+
+**Verified:** 31 passing automated tests; five real-service conversation scenarios; all five
+Airflow training tasks succeeded; two Kubernetes replicas; injected validation/readiness
+failures and healthy recovery. The [successful integration run](https://github.com/MehranHamayoon/assignment-03-mlops-agent/actions/runs/42392077317)
+and committed JSON exports provide the execution evidence.
 
 ## Quick verification
 

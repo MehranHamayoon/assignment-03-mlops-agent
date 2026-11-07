@@ -1,0 +1,183 @@
+{
+  "dataset_restored": true,
+  "kubernetes": {
+    "tool": "k8s_health",
+    "status": "ok",
+    "data": {
+      "healthy": true,
+      "namespace": "mlops",
+      "pods": [
+        {
+          "name": "iris-api-58f4ff9544-6fgx6",
+          "phase": "Running",
+          "ready": true,
+          "containers": [
+            {
+              "name": "api",
+              "ready": true,
+              "restart_count": 0,
+              "reason": null
+            }
+          ],
+          "images": [
+            "iris-api:1.0.0"
+          ]
+        },
+        {
+          "name": "iris-api-58f4ff9544-p5qns",
+          "phase": "Running",
+          "ready": true,
+          "containers": [
+            {
+              "name": "api",
+              "ready": true,
+              "restart_count": 0,
+              "reason": null
+            }
+          ],
+          "images": [
+            "iris-api:1.0.0"
+          ]
+        },
+        {
+          "name": "iris-api-5bcc7bfb7d-6bjwf",
+          "phase": "Running",
+          "ready": true,
+          "containers": [
+            {
+              "name": "api",
+              "ready": true,
+              "restart_count": 0,
+              "reason": null
+            }
+          ],
+          "images": [
+            "iris-api:1.0.0"
+          ]
+        }
+      ],
+      "deployments": [
+        {
+          "name": "iris-api",
+          "desired_replicas": 2,
+          "ready_replicas": 2,
+          "updated_replicas": 2,
+          "generation": 4,
+          "observed_generation": 4,
+          "images": [
+            "iris-api:1.0.0"
+          ],
+          "model_run_ids": [
+            "d9f235b0db5c456f8a03f22d43c1ecbf"
+          ]
+        }
+      ],
+      "services": [
+        {
+          "name": "iris-api",
+          "type": "ClusterIP",
+          "selector": {
+            "app": "iris-api"
+          },
+          "ports": [
+            80
+          ]
+        }
+      ],
+      "endpoints": [
+        {
+          "name": "iris-api",
+          "ready_addresses": [
+            "10.244.0.10",
+            "10.244.0.11"
+          ]
+        }
+      ],
+      "events": [
+        {
+          "pod": "iris-api-58f4ff9544-6fgx6",
+          "reason": "Scheduled",
+          "message": "Successfully assigned mlops/iris-api-58f4ff9544-6fgx6 to mlops-agent-control-plane",
+          "count": 1
+        },
+        {
+          "pod": "iris-api-58f4ff9544-6fgx6",
+          "reason": "Pulled",
+          "message": "Container image \"iris-api:1.0.0\" already present on machine",
+          "count": 1
+        },
+        {
+          "pod": "iris-api-58f4ff9544-6fgx6",
+          "reason": "Created",
+          "message": "Created container: api",
+          "count": 1
+        },
+        {
+          "pod": "iris-api-58f4ff9544-6fgx6",
+          "reason": "Started",
+          "message": "Started container api",
+          "count": 1
+        },
+        {
+          "pod": "iris-api-58f4ff9544-p5qns",
+          "reason": "Scheduled",
+          "message": "Successfully assigned mlops/iris-api-58f4ff9544-p5qns to mlops-agent-control-plane",
+          "count": 1
+        },
+        {
+          "pod": "iris-api-58f4ff9544-p5qns",
+          "reason": "Pulled",
+          "message": "Container image \"iris-api:1.0.0\" already present on machine",
+          "count": 1
+        },
+        {
+          "pod": "iris-api-58f4ff9544-p5qns",
+          "reason": "Created",
+          "message": "Created container: api",
+          "count": 1
+        },
+        {
+          "pod": "iris-api-58f4ff9544-p5qns",
+          "reason": "Started",
+          "message": "Started container api",
+          "count": 1
+        },
+        {
+          "pod": "iris-api-5bcc7bfb7d-6bjwf",
+          "reason": "Scheduled",
+          "message": "Successfully assigned mlops/iris-api-5bcc7bfb7d-6bjwf to mlops-agent-control-plane",
+          "count": 1
+        },
+        {
+          "pod": "iris-api-5bcc7bfb7d-6bjwf",
+          "reason": "Pulled",
+          "message": "Container image \"iris-api:1.0.0\" already present on machine",
+          "count": 1
+        },
+        {
+          "pod": "iris-api-5bcc7bfb7d-6bjwf",
+          "reason": "Created",
+          "message": "Created container: api",
+          "count": 1
+        },
+        {
+          "pod": "iris-api-5bcc7bfb7d-6bjwf",
+          "reason": "Started",
+          "message": "Started container api",
+          "count": 1
+        },
+        {
+          "pod": "iris-api-5bcc7bfb7d-6bjwf",
+          "reason": "Killing",
+          "message": "Stopping container api",
+          "count": 1
+        }
+      ],
+      "unhealthy_pods": [],
+      "note": "Readiness and endpoints are observed; external reachability is separate."
+    },
+    "error": null,
+    "request_id": "recovery-health",
+    "duration_ms": 26.25
+  }
+}

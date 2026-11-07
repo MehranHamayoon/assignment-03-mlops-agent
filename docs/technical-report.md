@@ -94,11 +94,18 @@ deployment results. The separate hosted demonstration builds the real Linux stac
 
 | Tested conversation | Required actual evidence export |
 |---|---|
-| Which dataset trained this MLflow run? | `evidence/live/01-dataset-provenance.json` |
-| Compare the last five runs by F1 | `evidence/live/02-model-selection.json` |
-| Trigger training and report execution | `evidence/live/03-pipeline-execution.json` |
-| Investigate prediction API availability | `evidence/live/04-deployment-diagnosis.json` |
-| Best model + DVC lineage + health + retraining | `evidence/live/05-multi-tool-reasoning.json` |
+| Which dataset trained this MLflow run? | [Provenance](../evidence/live/01-dataset-provenance.json) |
+| Compare the last five runs by F1 | [Model selection](../evidence/live/02-model-selection.json) |
+| Trigger training and report execution | [Pipeline](../evidence/live/03-pipeline-execution.json) |
+| Investigate prediction API availability | [Deployment](../evidence/live/04-deployment-diagnosis.json) |
+| Best model + DVC lineage + health + retraining | [Four-system reasoning](../evidence/live/05-multi-tool-reasoning.json) |
+
+All five scenarios and both failure/recovery investigations passed in the
+[final hosted run](https://github.com/MehranHamayoon/assignment-03-mlops-agent/actions/runs/42392077317)
+at source commit `e3e1339e1d05c301de566fe63a19e20989ef6ea4`. The comparison ranked exactly five
+real runs and selected macro F1 **0.9487**. The real training DAG completed all five tasks;
+the inference deployment had **2/2** ready replicas. See the
+[readable conversations](demo-conversations.md) for the exact prompts and observations.
 
 The [evidence index](../evidence/README.md) distinguishes local runs, mocks and live hosted
 observations. `evidence/live/status.json` is created only if all five conversations obtain the
@@ -134,6 +141,12 @@ file as a pipeline dependency. The pipeline now depends on data bytes and traini
 validation independently checks metadata against Git. A Windows console encoding failure
 after MLflow model logging was resolved by UTF-8 output; the already-recorded run was not
 reported as a completed end-to-end training demonstration until the stages were rerun.
+
+Hosted validation also exposed repeated LLM tool selection and a semantically wrong comparison
+scope/metric. One bounded planning step now invokes typed dependent workflows; explicit run
+counts are enforced and metric capitalization resolves only to a unique recorded key. Regression
+tests cover these cases. The live demonstration now checks an actual five-run ranking and
+candidate, rather than accepting a successful HTTP/tool response as sufficient evidence.
 
 ## 6. Limitations and proposed improvements
 
